@@ -82,7 +82,7 @@ def gateway_works(gw_ip: str, test_dns_server='1.1.1.1') -> bool:
     output = shell('ip route add ' + test_dns_server + ' via ' + gw_ip, 
                    output_wanted=True)
     if 'invalid gateway' in output:
-        return None
+        return False
     
     # Route packets to test DNS server via the provided gateway
     if dns_query('google.com', test_dns_server):
