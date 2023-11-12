@@ -34,7 +34,7 @@ def shell(cmd: str, output_wanted: bool = False):
     @returns None unless you set output_wanted to True.
     """
     if output_wanted:
-        data = sp.Popen(cmd, shell=True, stdout=sp.PIPE).communicate()[0].decode('utf-8')
+        data = sp.Popen(cmd + ' 2>&1', shell=True, stdout=sp.PIPE).communicate()[0].decode('utf-8')
         return data
     else:
         sp.call(cmd, shell=True, stdout=open(os.devnull, 'w'))
@@ -77,9 +77,14 @@ def gateway_works(gw_ip: str, test_dns_server='1.1.1.1') -> bool:
     @returns True if the gateway works. Otherwise returns False.
     """
     gateway_works = False
-
+    
+    # If the gateway does not even exist, we don't need to check the DNS
+    output = shell('ip route add ' + test_dns_server + ' via ' + gw_ip, 
+                   output_wanted=True)
+    if 'invalid gateway' in output:
+        return None
+    
     # Route packets to test DNS server via the provided gateway
-    shell('ip route add ' + test_dns_server + ' via ' + gw_ip)
     if dns_query('google.com', test_dns_server):
         gateway_works = True
     shell('ip route del ' + test_dns_server)
