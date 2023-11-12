@@ -21,4 +21,8 @@ Install network failover mechanism
    $ sudo chmod ugo+x /opt/failover.py
    ```
    
-3. Create cron job to run every minute:
+2. Create cron job to run every minute:
+   2.1. Edit crontab with `sudo crontab -e` and add the following line:
+   ```bash
+   */1 * * * *    /opt/failover.py > /dev/null
+   ```
