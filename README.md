@@ -1,7 +1,7 @@
 Description
 -----------
 
-Script to switch default gateway automatically in case of network failure.
+Script to switch the default gateway of a Linux system (automatically) in case of network failure.
 
 
 Install dependencies
