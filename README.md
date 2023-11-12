@@ -8,7 +8,7 @@ Install dependencies
 --------------------
 
 ```bash
-$ sudo apt install dig
+$ sudo apt install python3 dig
 ```
 
 Install network failover mechanism
