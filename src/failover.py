@@ -86,7 +86,7 @@ def gateway_works(gw_ip: str, test_ip='91.189.91.39') -> bool:
     
     # Route packets to test DNS server via the provided gateway
     output = shell('nc -zv -w 1 ' + test_ip + ' 80', output_wanted=True)
-    if 'succeeded' in output:
+    if 'timed out' not in output:
         gateway_works = True
     shell('ip route del ' + test_ip)
     
