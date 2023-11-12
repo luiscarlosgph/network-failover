@@ -21,7 +21,13 @@ Install network failover mechanism
    $ sudo chmod ugo+x /opt/failover.py
    ```
    
-2. Create cron job to run every minute. Edit the crontab file with `sudo crontab -e` and add the following line:
-   ```bash
-   * * * * *    /opt/failover.py --gateways 192.168.0.1 172.20.10.1 > /dev/null
-   ```
+2. Create cron job to run every minute:
+
+   Let's say that your gateways are `192.168.0.1` and `172.20.10.1`, then you should edit the crontab file
+   with `sudo crontab -e` and add the following line:
+   
+      ```bash
+      * * * * *    /opt/failover.py --gateways 192.168.0.1 172.20.10.1 > /dev/null
+      ```
+
+   
