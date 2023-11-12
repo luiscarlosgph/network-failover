@@ -8,7 +8,7 @@ Install dependencies
 --------------------
 
 ```bash
-$ sudo apt install python3 dig
+$ sudo apt install python3 dnsutils
 ```
 
 Install network failover mechanism
