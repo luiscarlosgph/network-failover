@@ -65,29 +65,30 @@ def dns_query(domain: str, test_dns_server):
                  output_wanted=True)
 
     
-def gateway_works(gw_ip: str, test_dns_server='1.1.1.1') -> bool:
+def gateway_works(gw_ip: str, test_ip='91.189.91.39') -> bool:
     """
     @brief  Checks whether a given gateway works or not. 
     
-    @param[in]  gw_ip            IP address of the gateway.
-    @param[in]  test_dns_server  IP of the DNS server we will try to connect
-                                 to in order to evaluate whether the gateway
-                                 works or not.
+    @param[in]  gw_ip    IP address of the gateway.
+    @param[in]  test_ip  IP of the DNS server we will try to connect
+                         to in order to evaluate whether the gateway
+                         works or not.
 
     @returns True if the gateway works. Otherwise returns False.
     """
     gateway_works = False
     
     # If the gateway does not even exist, we don't need to check the DNS
-    output = shell('ip route add ' + test_dns_server + ' via ' + gw_ip, 
+    output = shell('ip route add ' + test_ip + ' via ' + gw_ip, 
                    output_wanted=True)
     if 'invalid gateway' in output:
         return False
     
     # Route packets to test DNS server via the provided gateway
-    if dns_query('google.com', test_dns_server):
+    output = shell('nc -zv -w 1 ' + test_ip + ' 80', output_wanted=True)
+    if 'succeeded' in output:
         gateway_works = True
-    shell('ip route del ' + test_dns_server)
+    shell('ip route del ' + test_ip)
     
     return gateway_works
 
